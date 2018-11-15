@@ -46,5 +46,5 @@ function arrayProduct_with_extraSpace(arr) {
 }
 
 test_cases.forEach(function(arr){
-    console.log("input: "+arr+"Output: "+ arrayProduct_efficient(arr));
+    console.log("input: "+arr+" Output: "+ arrayProduct_with_extraSpace(arr));
 });
