@@ -12,6 +12,7 @@ let test_cases = [
     [1,2,3],
     [0,0,0,0],
     [0,2,3,4],
+    [2,3,4,5,6],
     [2364582346,8237648,298377,92736473246]
 ]
 
@@ -45,6 +46,22 @@ function arrayProduct_with_extraSpace(arr) {
     return prod;
 }
 
+function arrayProduct_efficient(arr) {
+    let prod = [];
+    let temp = 1;
+    let len = arr.length;
+    for(let i = 0; i < len; i++) {
+        prod[i] = temp;
+        temp = prod[i] * arr[i];
+    }
+    temp = 1;
+    for(let i = len-1; i >= 0; i--) {
+        prod[i] *= temp;
+        temp *= arr[i];
+    }
+    return prod;
+}
+
 test_cases.forEach(function(arr){
-    console.log("input: "+arr+" Output: "+ arrayProduct_with_extraSpace(arr));
+    console.log("input: "+arr+" Output: "+ arrayProduct_efficient(arr));
 });
