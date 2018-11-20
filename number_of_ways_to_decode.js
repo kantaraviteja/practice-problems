@@ -5,18 +5,19 @@
 // You can assume that the messages are decodable. For example, '001' is not allowed.
 
 
-function number_of_ways_to_decode(str) {
-    if (!str || str.length === 0) {
+function number_of_ways_to_decode(str, i) {
+    let len = str.length - i;
+    if (!str || len <= 0) {
         return 0;
     }
-    else if (str.length === 1) {
+    else if (len === 1) {
         return 1;
     }
-    else if (str.length === 2 ) {
+    else if (len === 2 ) {
         return (parseInt(str,10) < 27) ? 2 : 1;
     }
     else {
-        return (number_of_ways_to_decode(str.substring(1)) + number_of_ways_to_decode(str.substring(2)));
+        return (number_of_ways_to_decode(str, i+1) + number_of_ways_to_decode(str, i+2));
     }
 }
 
@@ -30,4 +31,4 @@ let test_cases = [
     "111"
 ];
 
-test_cases.forEach(str=>console.log(number_of_ways_to_decode(str)));
+test_cases.forEach(str=>console.log(number_of_ways_to_decode(str,0)));
