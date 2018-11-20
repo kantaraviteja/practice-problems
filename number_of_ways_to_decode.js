@@ -7,7 +7,7 @@
 
 function number_of_ways_to_decode(str, i) {
     let len = str.length - i;
-    if (!str || len <= 0) {
+    if (len <= 0) {
         return 0;
     }
     else if (len === 1) {
