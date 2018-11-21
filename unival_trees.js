@@ -26,12 +26,13 @@ class treeNode {
     }
 }
 
-let root = new treeNode(1);
+let root = new treeNode(0);
 root.left = new treeNode(1);
-root.right = new treeNode(1);
-root.right.right = new treeNode(1);
-root.left.left = new treeNode(1);
-root.left.right = new treeNode(1);
+root.right = new treeNode(0);
+root.right.right = new treeNode(0);
+root.right.left = new treeNode(1);
+root.right.left.left = new treeNode(1);
+root.right.left.right = new treeNode(1);
 
 function number_of_unival_trees(node) {
     let count;
