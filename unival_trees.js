@@ -51,5 +51,4 @@ function number_of_unival_trees(node) {
     count = (node.left.data === node.right.data && node.left.data === node.data) ? 1 : 0;
     return count + number_of_unival_trees(node.left) + number_of_unival_trees(node.right);
 }
-
 console.log(number_of_unival_trees(root));
