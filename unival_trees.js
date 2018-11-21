@@ -33,7 +33,6 @@ root.right.right = new treeNode(1);
 root.left.left = new treeNode(1);
 root.left.right = new treeNode(1);
 
-
 function number_of_unival_trees(node) {
     let count;
     if (node.isLeaf()) {
