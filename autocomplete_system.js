@@ -17,26 +17,18 @@ class trieNode {
     hasChild(e) {
         return (this.children[e]) ? true: false;
     }
-    getAllWords() {
-        let res = [];
-        if(Object.keys(this.children).length==0){
-            return res;
-        }
-        else {
-
-        }
-    }
 }
 
 function preProcessDictionaryIntoTrie (dictionary) {
     let root;
-    dictionary.forEach(function(word){
-        let curr = root;
+    dictionary.forEach(function(word) {
+        let curr=root;
         [...word].forEach(function(c){
             if(!root) {
                 root = new trieNode();
+                root.setChild(c);
                 curr = root;
-                curr.setChild(c);
+                curr = curr.children[c];
             }
             else {
                 if(!curr.hasChild(c)){
@@ -50,7 +42,13 @@ function preProcessDictionaryIntoTrie (dictionary) {
 }
 
 // console.log(JSON.stringify(preProcessDictionaryIntoTrie(dictionary)));
+
 function getAllWords (node) {
+    let res = [];
+    if(Object.keys(node.children).length==0){
+        return res;
+    }
+    else {
         Object.keys(node.children).forEach(function(c){
             let arr = getAllWords(node.children[c]);
             console.log(arr);
@@ -62,7 +60,10 @@ function getAllWords (node) {
             }
         });
 
+        return [];
+    }
 }
+
 function autocompleteSuggestions(str, dictionary) {
     let trie = preProcessDictionaryIntoTrie(dictionary);
     let curr = trie;
@@ -76,6 +77,6 @@ function autocompleteSuggestions(str, dictionary) {
 
 }
 
-autocompleteSuggestions("de",dictionary);
+// autocompleteSuggestions("de",dictionary);
 
 // getAllWords();
