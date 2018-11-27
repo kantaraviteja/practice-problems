@@ -1,9 +1,10 @@
+// This problem was asked by Twitter.
 
-let dictionary = [
-    "dog",
-    "deer",
-    "deal"
-];
+// Implement an autocomplete system. That is, given a query string s and a set of all possible query strings, return all strings in the set that have s as a prefix.
+
+// For example, given the query string de and the set of strings [dog, deer, deal], return [deer, deal].
+
+// Hint: Try preprocessing the dictionary into a more efficient data structure to speed up queries.
 
 class trieNode {
     constructor() {
@@ -19,64 +20,72 @@ class trieNode {
     }
 }
 
-function preProcessDictionaryIntoTrie (dictionary) {
+function preProcessDictionaryIntoTrie(dictionary) {
     let root;
-    dictionary.forEach(function(word) {
-        let curr=root;
-        [...word].forEach(function(c){
-            if(!root) {
+    dictionary.forEach((word) => {
+        let curr = root;
+        [...word].forEach((c) => {
+            if (!root) {
                 root = new trieNode();
                 root.setChild(c);
                 curr = root;
-                curr = curr.children[c];
             }
             else {
-                if(!curr.hasChild(c)){
+                if (!curr.hasChild(c)) {
                     curr.setChild(c);
                 }
-                curr = curr.children[c];
             }
+            curr = curr.children[c];
         });
     });
     return root;
 }
 
-// console.log(JSON.stringify(preProcessDictionaryIntoTrie(dictionary)));
-
-function getAllWords (node) {
-    let res = [];
-    if(Object.keys(node.children).length==0){
-        return res;
+function getAllWords (node, str, res) {
+    str = str || "";
+    res = res || [];
+    
+    if (Object.keys(node.children).length === 0) {
+        res.push(str);
     }
-    else {
-        Object.keys(node.children).forEach(function(c){
-            let arr = getAllWords(node.children[c]);
-            console.log(arr);
-            if (arr && arr.length > 0){
-                return arr.map(e=>c+e);
-            }
-            else {
-                return [c];
-            }
-        });
 
-        return [];
-    }
+    Object.keys(node.children).forEach((key) => {
+        getAllWords(node.children[key], str + key, res);
+    });
+    
+    return res;
 }
 
 function autocompleteSuggestions(str, dictionary) {
+    
     let trie = preProcessDictionaryIntoTrie(dictionary);
     let curr = trie;
-    console.log(getAllWords(trie));
-    // [...str].forEach(function(c){
-    //     if (curr.hasChild(c)) {
-    //         curr = curr.children[c];
-    //     }
-    // });
-    // console.log(curr.children);
 
+    [...str].forEach((c)=>{
+        if (curr.hasChild(c)) {
+            curr = curr.children[c];
+        }
+    });
+
+    return getAllWords(curr).map(e => str + e);
 }
 
-// autocompleteSuggestions("de",dictionary);
+let dictionary = [
+    "dog",
+    "dope",
+    "deer",
+    "deal",
+    "deep",
+    "apple",
+    "auto"
+];
 
-// getAllWords();
+let testCases = [
+    "d",
+    "de",
+    "dea",
+    "a",
+    "au"
+];
+
+testCases.forEach(str => console.log( autocompleteSuggestions(str, dictionary)) );
